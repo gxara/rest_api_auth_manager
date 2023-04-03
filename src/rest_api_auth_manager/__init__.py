@@ -30,18 +30,12 @@ class AuthManager:
         """
         user_name = self._credentials_repository.hget("CREDENTIALS", token)
 
-        print('user_name', user_name)
-
         if not user_name:
             return False
 
         user_details = self._credentials_repository.get_user(user_name)
         user_roles = user_details["roles"]
         permission_set = self._build_user_permissions(user_roles)
-
-        print("user_details", user_details)
-        print("user_roles", user_roles)
-        print("permission_set", permission_set)
 
         if not permission_set:
             logging.debug("User has no permissions")
@@ -50,7 +44,7 @@ class AuthManager:
         requested_route = route.replace("/", "_").replace("-", "_").lower()
         methods_for_resource = {}
 
-        # Verifica se há uma correspondência no permission_set usando REGEX
+        # Verify if resource is valid using REGEX
         for resource in permission_set:
             if re.search(resource, requested_route):
                 methods_for_resource = permission_set[resource]
@@ -69,10 +63,8 @@ class AuthManager:
 
         token = self._config.environment + "_" + password
 
-        self._credentials_repository.insert_hash(
-            "USERS", details["alias"],  json.dumps(details))
-        self._credentials_repository.insert_hash(
-            "CREDENTIALS", token,  details["alias"])
+        self._credentials_repository.insert_hash("USERS", details["alias"],  json.dumps(details))
+        self._credentials_repository.insert_hash("CREDENTIALS", token,  details["alias"])
 
         return token
 
@@ -85,20 +77,16 @@ class AuthManager:
             role: the role to be assigned to the user
 
         Example:
-            user: "TON_CHATBOT"
-            role: "service_order:get"
+            user: "ASH_KETCHUM"
+            role: "pokemon:get"
         """
-        # self.roles_per_user[user].add(role)
 
-        user_details = json.loads(
-            self._credentials_repository.hget("USERS", user))
+        user_details = json.loads(self._credentials_repository.hget("USERS", user))
 
         roles = user_details.get("roles", [])
 
         self._credentials_repository.insert_hash(
             "USERS", user, json.dumps({**user_details, "roles": [*roles, role]}))
-
-        # self._credentials_repository.insert("ROLES_PER_USER", self.roles_per_user)
 
     def add_resource(self, resource: str, path: str) -> None:
         """
@@ -108,8 +96,8 @@ class AuthManager:
             path: the path to the resource (using REGEX syntax)
 
         Example:
-            resource: "service_order"
-            path: "api_service_orders_.[^_]*$"
+            resource: "pokemon"
+            path: "api_pokemon_.[^_]*$"
 
         """
         resources_map = self._credentials_repository.get_resources_map()

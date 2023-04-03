@@ -4,8 +4,6 @@ from src.rest_api_auth_manager.repository import CredentialsDatabase
 import pytest
 import logging
 
-logging.basicConfig(level=logging.DEBUG)
-
 
 class TestConfig(Config):
     credentials_database_host = "127.0.0.1"
@@ -20,9 +18,9 @@ def populate_database(servicos_compose):
 
     # Adding resources
     resources_map = {
-        "service_order": "api_service_orders_.[^_]*$",
-        "service_orders": "api_service_orders$",
-        "service_orders_images": "api_service_orders_.*_images$",
+        "pokemon": "api_pokemon_.[^_]*$",
+        "pokemon": "api_pokemon$",
+        "pokemon_images": "api_pokemon_.*_images$",
     }
 
     for k, v in resources_map.items():
