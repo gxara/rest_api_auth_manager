@@ -47,8 +47,7 @@ def test_add_user(auth_manager: AuthManager):
     }
 
     token = auth_manager.add_user(user)
-    assert auth_manager.verify_auth(
-        token, "api/pokemon", "GET") is False
+    assert auth_manager.verify_auth(token, "api/pokemon", "GET") is False
 
 
 def test_add_role_to_user(auth_manager: AuthManager):

@@ -11,8 +11,7 @@ class AuthManager:
 
     def __init__(self, config: Config):
         self._config = config
-        self._credentials_repository = CredentialsDatabase(
-            config.credentials_database_host)
+        self._credentials_repository = CredentialsDatabase(config.credentials_database_host)
 
     def verify_auth(self, token: str, route: str, method: str) -> bool:
         """

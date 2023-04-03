@@ -1,31 +1,50 @@
-# simple-python-redis-auth
+# rest-api-simple-auth-manager
 
-Biblioteca python para lidar com autenticação e autorização de usuários utilizando redis.
+Simple REST API authentication and authorization manager, designed to operate with token-based security. This package is intended to act as a middleware, providing a secure method for verifying user credentials before granting access to the requested resource.
 
-## Authors
+The current implementation relies on a Redis instance to store and manage credentials. However, we are working on integrating other database options to offer more flexibility and customization.
 
-- [Gabriel Xará](https://github.com/gxara)
-
-## Utilizando o AuthManager
-
-### Instalando o pacote
+### Install
 
 ```bash
 pip install rest_api_auth_manager
 ```
 
-### Adicionar um usuário
+### Initializing the auth manager
 
-#TODO
+```python
+from rest_api_auth_manager import AuthManager, Config
 
-### Associar uma role a um usuário
+class CustomConfig(Config):
+    credentials_database_host = "127.0.0.1"
+    environment = "dev"
+    password_length = 16
 
-#TODO
+auth_manager = AuthManager(CustomConfig)
+```
 
-### Autenticação e autorização de requisição
+### Add new user
 
-#TODO
+```python
+user = {
+    "alias": "ASH_KETCHUM",
+    "name": "Ash Ketchum",
+    "email": "ash@test.com",
+    "roles": [],
+}
 
-### Executando os testes:
+token = auth_manager.add_user(user)
+```
 
-`pytest`
+### Granting usage on a specific resource
+
+```python
+auth_manager.add_role_to_user("ASH_KETCHUM", "pokemons:get")
+```
+
+### Verifying requests authentication and authorization
+
+```python
+token = "SUPER_SECRET"
+auth_manager.verify_auth(token, "api/pokemon", "GET")
+```
