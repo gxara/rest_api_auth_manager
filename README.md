@@ -30,7 +30,7 @@ user = {
     "alias": "ASH_KETCHUM",
     "name": "Ash Ketchum",
     "email": "ash@test.com",
-    "roles": [],
+    "roles": ["pokemons:get"],
 }
 
 token = auth_manager.add_user(user)
@@ -39,7 +39,7 @@ token = auth_manager.add_user(user)
 ### Granting usage on a specific resource
 
 ```python
-auth_manager.add_role_to_user("ASH_KETCHUM", "pokemons:get")
+auth_manager.add_role_to_user("ASH_KETCHUM", "pokemons:post")
 ```
 
 ### Verifying requests authentication and authorization
