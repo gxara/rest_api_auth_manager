@@ -1,0 +1,4 @@
+redis==3.5.
+pytest==6.0.2
+artifacts-keyring
+pytest-docker==1.0.1
