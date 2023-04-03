@@ -19,7 +19,7 @@ def populate_database(servicos_compose):
     # Adding resources
     resources_map = {
         "pokemon": "api_pokemon_.[^_]*$",
-        "pokemon": "api_pokemon$",
+        "pokemons": "api_pokemon$",
         "pokemon_images": "api_pokemon_.*_images$",
     }
 
