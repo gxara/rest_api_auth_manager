@@ -6,6 +6,7 @@ import logging
 
 logging.basicConfig(level=logging.DEBUG)
 
+
 class TestConfig(Config):
     credentials_database_host = "127.0.0.1"
     environment = "dev"
@@ -33,13 +34,13 @@ def auth_manager():
     return AuthManager(TestConfig)
 
 
-
 @pytest.fixture(scope="session", autouse=True)
 def servicos_compose(docker_ip, docker_services):
     """Garante que os serviços estejam no ar antes de rodar os testes"""
 
     def redis_is_responsive(config):
-        redis_server = CredentialsDatabase(host=config.credentials_database_host)
+        redis_server = CredentialsDatabase(
+            host=config.credentials_database_host)
         return True if redis_server.is_alive() else False
 
     docker_services.wait_until_responsive(
