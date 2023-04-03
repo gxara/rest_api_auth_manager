@@ -8,7 +8,7 @@ import logging
 class TestConfig(Config):
     credentials_database_host = "127.0.0.1"
     environment = "dev"
-    password_length = 16
+    token_length = 16
 
 
 @pytest.fixture(scope="session", autouse=True)

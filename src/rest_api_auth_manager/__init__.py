@@ -56,11 +56,13 @@ class AuthManager:
         """
         Create a new user and add it to the credentials repository
         """
-        characters = string.ascii_letters + string.digits
-        password = ''.join(random.choice(characters)
-                           for _ in range(self._config.password_length))
 
-        token = self._config.environment + "_" + password
+        if details.get("token") is not None:
+            token = details["token"]
+        else:
+            characters = string.ascii_letters + string.digits
+            secret = ''.join(random.choice(characters) for _ in range(self._config.token_length))
+            token = self._config.environment + "_" + secret
 
         self._credentials_repository.insert_hash("USERS", details["alias"],  json.dumps(details))
         self._credentials_repository.insert_hash("CREDENTIALS", token,  details["alias"])

@@ -18,7 +18,7 @@ from rest_api_auth_manager import AuthManager, Config
 class CustomConfig(Config):
     credentials_database_host = "127.0.0.1"
     environment = "dev"
-    password_length = 16
+    token_length = 16
 
 auth_manager = AuthManager(CustomConfig)
 ```
