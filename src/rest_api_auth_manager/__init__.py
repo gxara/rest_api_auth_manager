@@ -59,6 +59,7 @@ class AuthManager:
 
         if details.get("token") is not None:
             token = details["token"]
+            del details["token"]
         else:
             characters = string.ascii_letters + string.digits
             secret = ''.join(random.choice(characters) for _ in range(self._config.token_length))
